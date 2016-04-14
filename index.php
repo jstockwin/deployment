@@ -30,10 +30,10 @@ if(isset($_POST['payload'])){
         if($result->num_rows >0){
                 echo    "<table>";
                 echo    "<tr>";
-                echo    "<td>Repository</td><td>Last Commit</td><td>Time</td><td>User</td>";
+                echo    "<td>Repository</td><td>Last Commit</td><td>Time</td><td>User</td><td>Status</td>";
                 echo    "</tr>";
                 while($row = $result->fetch_assoc()){
-                echo "<tr><td>".$row['repo']."</td><td>".$row['commit']."</td><td>".$row['time']."</td><td>".$row['committer']."</td></tr>";
+                echo "<tr><td>".$row['repo']."</td><td>".$row['commit']."</td><td>".$row['time']."</td><td>".$row['committer']."</td><td>".$row['status']."</td></tr>";
                 }
         }
 }
