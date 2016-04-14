@@ -57,7 +57,8 @@ function gitPull($conn, $repo, $out=false){
                 $conn->query($sql);
                 $output = shell_exec("cd $dir && git pull");
                 if($out){
-                        echo $output;
+					echo "Executing a git pull in directory $dir";
+                    echo $output;
                 }
         }else{
                 //deployment is not hosted by this server.
