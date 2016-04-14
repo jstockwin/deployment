@@ -45,7 +45,7 @@ function gitPull($conn, $repo){
                 case "Film-Night":
                         $dir = "/var/www/films.jakestockwin.co.uk/public_html";
                         break;
-                case "Deployment":
+                case "deployment":
                         $dir = "/var/www/deployment.jakestockwin.co.uk/public_html";
                         break;
                 default:
@@ -59,9 +59,9 @@ function gitPull($conn, $repo){
 			echo "Executing a git pull in directory $dir";
 			echo $output;
         }else{
-                echo "deployment is not hosted by this server";
-                $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
-                $conn->query($sql);
+            echo "deployment is not hosted by this server";
+            $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
+            $conn->query($sql);
         }
 }
 
