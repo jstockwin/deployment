@@ -21,7 +21,7 @@ if(isset($_POST['payload'])){
                 echo "Something went wrong with SQL. Result was:\r\n";
                 echo $result;
         }
-                gitPull($conn, $repo, true);
+        echo gitPull($conn, $repo);
 }else{
         if(isset($_GET['repo'])){
                 gitPull($conn, $_GET['repo']);
@@ -39,7 +39,7 @@ if(isset($_POST['payload'])){
 }
 
 
-function gitPull($conn, $repo, $out=false){
+function gitPull($conn, $repo){
         $managing = TRUE;
         switch($repo) {
                 case "Film-Night":
@@ -53,15 +53,13 @@ function gitPull($conn, $repo, $out=false){
         }
 
         if($managing){
-			    $sql = "UPDATE deployments SET status = 'Deployed using git pull' WHERE repo = '$repo'";
-                $conn->query($sql);
-                $output = shell_exec("cd $dir && git pull");
-                if($out){
-					echo "Executing a git pull in directory $dir";
-                    echo $output;
-                }
+			$sql = "UPDATE deployments SET status = 'Deployed using git pull' WHERE repo = '$repo'";
+			$conn->query($sql);
+			$output = shell_exec("cd $dir && git pull");
+			echo "Executing a git pull in directory $dir";
+			echo $output;
         }else{
-                //deployment is not hosted by this server.
+                echo "deployment is not hosted by this server";
                 $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
                 $conn->query($sql);
         }
