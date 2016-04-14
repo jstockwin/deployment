@@ -11,7 +11,7 @@ if(isset($_POST['payload'])){
         $payload = json_decode(stripslashes($_POST['payload']));
         $repo = $payload->{'repository'}->{'name'};
         $commit = $payload->{'head_commit'}->{'message'};
-        $time = $payload->{'head_commit'}->{'time'};
+        $time = $payload->{'head_commit'}->{'timestamp'};
         $committer = $payload->{'head_commit'}->{'committer'}->{'username'};
         $sql = "REPLACE INTO deployments VALUES ('$repo', '$commit', '$time', '$committer', 'awaiting deployment')";
         $result = $conn->query($sql);
