@@ -16,7 +16,7 @@ if(isset($_POST['payload'])){
         $sql = "REPLACE INTO deployments VALUES ('$repo', '$commit', '$time', '$committer', 'awaiting deployment')";
         $result = $conn->query($sql);
         if($result){
-                echo "Successfully updated SQL";
+                echo "Successfully updated SQL table for $repo\r\n";
         }else{
                 echo "Something went wrong with SQL. Result was:\r\n";
                 echo $result;
@@ -56,7 +56,7 @@ function gitPull($conn, $repo){
 			$sql = "UPDATE deployments SET status = 'Deployed using git pull' WHERE repo = '$repo'";
 			$conn->query($sql);
 			$output = shell_exec("cd $dir && git pull");
-			echo "Executing a git pull in directory $dir";
+			echo "Executing a git pull in directory $dir\r\n";
 			echo $output;
         }else{
             echo "deployment is not hosted by this server";
