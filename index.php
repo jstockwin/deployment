@@ -1,7 +1,7 @@
 
 <?php
 include '/../database.php';
-$conn = new myqli($host, $username, $password, "deployment");
+$conn = new myqli($host, $username, $password, "deployments");
 
 if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
@@ -17,6 +17,18 @@ if(isset($_REQUEST['payload'])){
         $sql = "REPLACE INTO deployment VALUES ('$repo', '$commit', '$time', '$committer')";
         $conn->query($sql);
 }
+
+$result = $conn->query("SELECT * FROM deployment");
+if($result->num_rows >0){
+        echo    "<table>";
+        echo    "<tr>";
+        echo    "<td>Repository</td><td>Last Commit</td><td>Time</td><td>User</td>";
+        echo    "</tr>";
+        while($row = $result->fetch_assoc()){
+        echo "<tr><td>".$row['repo']."</td><td>".$row['commit']."</td><td>".$row['time']."</td><td>".$row['committer']."</td></tr>";
+        }
+}
+
 
 ?>
 
