@@ -21,10 +21,10 @@ if(isset($_POST['payload'])){
                 echo "Something went wrong with SQL. Result was:\r\n";
                 echo $result;
         }
-        echo gitPull($conn, $repo);
+        echo deploy($conn, $repo);
 }else{
         if(isset($_GET['repo'])){
-                gitPull($conn, $_GET['repo']);
+                deploy($conn, $_GET['repo']);
         }
         $result = $conn->query("SELECT * FROM deployments");
         if($result->num_rows >0){
@@ -39,7 +39,7 @@ if(isset($_POST['payload'])){
 }
 
 
-function gitPull($conn, $repo){
+function deploy($conn, $repo){
         $managing = TRUE;
         switch($repo) {
                 case "Film-Night":
@@ -59,7 +59,7 @@ function gitPull($conn, $repo){
 			echo "Executing a git pull in directory $dir\r\n";
 			echo $output;
         }else{
-            echo "deployment is not hosted by this server";
+            echo "$repo is not hosted by this server";
             $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
             $conn->query($sql);
         }
