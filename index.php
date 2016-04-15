@@ -29,6 +29,7 @@ if(isset($_POST['payload'])){
 		}
 	
         echo "Payload received, secret accepted\r\n";
+		$payload = json_decode($payload);
         $repo = $payload->{'repository'}->{'name'};
         $commit = $payload->{'head_commit'}->{'message'};
         $time = $payload->{'head_commit'}->{'timestamp'};
