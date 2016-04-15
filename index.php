@@ -57,11 +57,13 @@
         if(isset($_GET['repo'])){
 			deploy($conn, $_GET['repo']);
 		}
+		echo '<head><link rel="stylesheet", type="text/css" href="styles.css"></head>';
+		echo '<body>';
 		echo "<h1>Deployment Server</h1>";
 		echo "<h3>Server Status:</h3>";
 	
 		echo "<table>
-		<tr><td>CPU</td><td>RAM</td><td>Disk</td></tr>
+		<tr style='font-weight: bold'><th>CPU</th><th>RAM</th><th>Disk</th></tr>
 		<tr><td>".get_server_cpu_usage()."%</td><td>".get_server_memory_usage()."%</td><td>".get_server_disk_usage()."%</td></tr>
 		</table>";
 	
@@ -71,12 +73,15 @@
         if($result->num_rows >0){
 			echo    "<table>";
 			echo    "<tr>";
-			echo    "<td>Repository</td><td>Last Commit</td><td>Time</td><td>User</td><td>Status</td>";
+			echo    "<th>Repository</th><th>Last Commit</th><th>Time</th><th>User</th><th>Status</th>";
 			echo    "</tr>";
 			while($row = $result->fetch_assoc()){
                 echo "<tr><td>".$row['repo']."</td><td>".$row['commit']."</td><td>".$row['time']."</td><td>".$row['committer']."</td><td>".$row['status']."</td></tr>";
 			}
+			echo "</table>";
 		}
+		
+		echo "</body>";
 	}
 	
 	
