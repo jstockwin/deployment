@@ -7,16 +7,7 @@
 		var_dump(http_response_code(500));
 		die("Connection failed: " . $conn->connect_error);
 	}
-	
-	echo "<h1>Deployment Server</h1>";
-	echo "<h3>Server Status:</h3>";
-	
-	echo "<table>
-	<tr><td>CPU</td><td>RAM</td><td>Disk</td></tr>
-	<tr><td>".get_server_cpu_usage()."%</td><td>".get_server_memory_usage()."%</td><td>".get_server_disk_usage()."%</td></tr>
-	</table>";
-	
-	echo "<h3>Deployment Status</h3>";
+
 	
 	
 	if(isset($_POST['payload'])){
@@ -57,15 +48,25 @@
         $result = $conn->query($sql);
         if($result){
 			echo "Successfully updated SQL table for $repo\r\n";
-			}else{
+		}else{
 			echo "Something went wrong with SQL. Result was:\r\n";
 			echo $result;
 		}
         echo deploy($conn, $repo);
-		}else{
+	}else{
         if(isset($_GET['repo'])){
 			deploy($conn, $_GET['repo']);
 		}
+		echo "<h1>Deployment Server</h1>";
+		echo "<h3>Server Status:</h3>";
+	
+		echo "<table>
+		<tr><td>CPU</td><td>RAM</td><td>Disk</td></tr>
+		<tr><td>".get_server_cpu_usage()."%</td><td>".get_server_memory_usage()."%</td><td>".get_server_disk_usage()."%</td></tr>
+		</table>";
+	
+		echo "<h3>Deployment Status</h3>";
+		
         $result = $conn->query("SELECT * FROM deployments");
         if($result->num_rows >0){
 			echo    "<table>";
