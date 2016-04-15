@@ -43,7 +43,7 @@ if(isset($_POST['payload'])){
 		$payload = json_decode(stripslashes($_POST['payload']));
 		
 		$ref = $payload->{'ref'};
-		if(strpos($ref, "refs/heads/master")==false){
+		if(strpos($ref, "refsheadsmaster")==false){
 			die("Push was not to master branch. Ignoring change");
 		}
 		
