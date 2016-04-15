@@ -30,6 +30,12 @@ if(isset($_POST['payload'])){
 	
         echo "Payload received, secret accepted\r\n";
 		$payload = json_decode(stripslashes($_POST['payload']));
+		
+		$ref = $payload->{'ref'};
+		if(strpos($ref, "refs/heads/master")==false){
+			die("Push was not to master branch. Ignoring change");
+		}
+		
         $repo = $payload->{'repository'}->{'name'};
         $commit = $payload->{'head_commit'}->{'message'};
         $time = $payload->{'head_commit'}->{'timestamp'};
