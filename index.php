@@ -65,7 +65,7 @@
 		<tr><td>".get_server_cpu_usage()."%</td><td>".get_server_memory_usage()."%</td><td>".get_server_disk_usage()."%</td></tr>
 		</table>";
 	
-		echo "<h3>Deployment Status</h3>";
+		echo "<h3>Deployment Status:</h3>";
 		
         $result = $conn->query("SELECT * FROM deployments");
         if($result->num_rows >0){
