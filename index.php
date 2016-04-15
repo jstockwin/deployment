@@ -3,7 +3,8 @@ include '../database.php';
 $conn = new mysqli($host, $username, $password, "deployment");
 
 if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
+	var_dump(http_response_code(500));
+    die("Connection failed: " . $conn->connect_error);
 }
 
 
@@ -97,6 +98,7 @@ function deploy($conn, $repo){
 				$sql = "UPDATE deployments SET status = 'Deployment Failed. Check github webpush logs for details' WHERE repo = '$repo'";
 				$conn->query($sql);
 				echo "Error: Git pull failed";
+				var_dump(http_response_code(500));
 			}
         }else{
             echo "$repo is not hosted by this server";
