@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: http://jakestockwin.co.uk');
 // Check for empty fields
 if(empty($_POST['name'])  		||
    empty($_POST['email']) 		||
