@@ -4,7 +4,8 @@ font-family: Helvetica, Arial, sans-serif; /* Nicer font */
 
 table { 
 color: #333; /* Lighten up font color */
-width: 640px; 
+min-width: 640px; 
+max-width: 1200px;
 border-collapse: 
 collapse; border-spacing: 0; 
 }
