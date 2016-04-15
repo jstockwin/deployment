@@ -40,6 +40,8 @@ if(isset($_POST['payload'])){
         $repo = $payload->{'repository'}->{'name'};
         $commit = $payload->{'head_commit'}->{'message'};
         $time = $payload->{'head_commit'}->{'timestamp'};
+		$time = new DateTime($time);
+		$time = $time->format('Y-m-d H:i:s');
         $committer = $payload->{'head_commit'}->{'committer'}->{'username'};
         $sql = "REPLACE INTO deployments VALUES ('$repo', '$commit', '$time', '$committer', 'awaiting deployment')";
         $result = $conn->query($sql);
