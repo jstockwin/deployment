@@ -1,5 +1,6 @@
 <?php
 include '../database.php';
+include 'functions.php';
 $conn = new mysqli($host, $username, $password, "deployment");
 
 if ($conn->connect_error) {
@@ -7,6 +8,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+echo "<h1>Deployment Server</h1>";
+echo "<h3>Server Status:</h3>";
+
+echo "<table>
+        <tr><td>CPU</td><td>RAM</td><td>Disk</td></tr>
+        <tr><td>".get_server_cpu_usage()."%</td><td>".get_server_memory_usage()."%</td><td>".get_server_disk_usage()."%</td></tr>
+     </table>";
+
+echo "<h3>Deployment Status</h3>";
 
 
 if(isset($_POST['payload'])){
@@ -68,45 +78,5 @@ if(isset($_POST['payload'])){
         }
 }
 
-
-function deploy($conn, $repo){
-        $managing = TRUE;
-        switch($repo) {
-                case "Film-Night":
-                        $dir = "/var/www/films.jakestockwin.co.uk/public_html";
-                        break;
-                case "deployment":
-                        $dir = "/var/www/deployment.jakestockwin.co.uk/public_html";
-                        break;
-                default:
-                        $managing = FALSE;
-        }
-
-        if($managing){
-			$sql = "UPDATE deployments SET status = 'Deployed using git pull' WHERE repo = '$repo'";
-			$conn->query($sql);
-			$output = shell_exec("cd $dir && git pull");
-			echo "Executing a git pull in directory $dir\r\n";
-			echo $output;
-			if(strpos($output, "Fast-forward")!==false){
-				$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
-				$conn->query($sql);
-				echo "Success: Fast forward performed";
-			}else if(strpos($output, "Already up-to-date")!==false){
-				$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
-				$conn->query($sql);
-				echo "The repository was already up to date";
-			}else{
-				$sql = "UPDATE deployments SET status = 'Deployment Failed. Check github webpush logs for details' WHERE repo = '$repo'";
-				$conn->query($sql);
-				echo "Error: Git pull failed";
-				var_dump(http_response_code(500));
-			}
-        }else{
-            echo "$repo is not hosted by this server";
-            $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
-            $conn->query($sql);
-        }
-}
 
 ?>
