@@ -6,27 +6,29 @@ if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
 }
 
-$headers = getallheaders();
-$hubSignature = $headers['X-Hub-Signature'];
- 
-// Split signature into algorithm and hash
-list($algo, $hash) = explode('=', $hubSignature, 2);
- 
-// Get payload
-$payload = file_get_contents('php://input');
- 
-// Calculate hash based on payload and the secret
-$payloadHash = hash_hmac($algo, $payload, $secret);
- 
-// Check if hashes are equivalent
-if ($hash !== $payloadHash) {
-    // Kill the script or do something else here.
-    die('Bad secret');
-}
+
 
 if(isset($_POST['payload'])){
-        echo "Payload received\r\n";
-        $payload = json_decode(stripslashes($_POST['payload']));
+	
+		$headers = getallheaders();
+		$hubSignature = $headers['X-Hub-Signature'];
+		 
+		// Split signature into algorithm and hash
+		list($algo, $hash) = explode('=', $hubSignature, 2);
+		 
+		// Get payload
+		$payload = file_get_contents('php://input');
+		 
+		// Calculate hash based on payload and the secret
+		$payloadHash = hash_hmac($algo, $payload, $secret);
+		 
+		// Check if hashes are equivalent
+		if ($hash !== $payloadHash) {
+			// Kill the script or do something else here.
+			die('Bad secret');
+		}
+	
+        echo "Payload received, secret accepted\r\n";
         $repo = $payload->{'repository'}->{'name'};
         $commit = $payload->{'head_commit'}->{'message'};
         $time = $payload->{'head_commit'}->{'timestamp'};
