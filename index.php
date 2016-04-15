@@ -79,6 +79,19 @@ function deploy($conn, $repo){
 			$output = shell_exec("cd $dir && git pull");
 			echo "Executing a git pull in directory $dir\r\n";
 			echo $output;
+			if(strpos($output, "Fast-forward")!==false){
+				$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
+				$conn->query($sql);
+				echo "Success: Fast forward performed";
+			}else if(strpos($output, "Already up-to-date")!==false){
+				$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
+				$conn->query($sql);
+				echo "The repository was already up to date";
+			}else{
+				$sql = "UPDATE deployments SET status = 'Deployment Failed. Check github webpush logs for details' WHERE repo = '$repo'";
+				$conn->query($sql);
+				echo "Error: Git pull failed";
+			}
         }else{
             echo "$repo is not hosted by this server";
             $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
