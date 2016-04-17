@@ -39,7 +39,7 @@ function deploy($conn, $repo){
                 case "deployment":
                         $dir = "/var/www/deployment.jakestockwin.co.uk/public_html";
                         break;
-				case: "book-sales":
+				case "book-sales":
 						$dir = "/home/jake/book-sales";
 						$node = TRUE;
 						$appName = "keystone.js";
