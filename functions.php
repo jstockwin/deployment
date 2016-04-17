@@ -82,7 +82,7 @@ function deploy($conn, $repo){
 					$conn->query($sql);
 				}else{
 					// Perhaps the server is not started for some reason?
-					echo "There was an error trying to restart $appName, trying just to start it";
+					echo "There was an error trying to restart $appName, trying just to start it\r\n";
 					$output = shell_exec("cd $dir && forever start $appName");
 					if(strpos($output, "error")!==false){
 						echo "$appName started successfully\r\n";
