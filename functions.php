@@ -65,7 +65,7 @@ function deploy($conn, $repo){
 					$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
 					$conn->query($sql);
 				}
-				echo "The repository was already up to date";
+				echo "The repository was already up to date\r\n";
 			}else{
 				$sql = "UPDATE deployments SET status = 'Deployment Failed. Check github webpush logs for details' WHERE repo = '$repo'";
 				$conn->query($sql);
@@ -74,10 +74,10 @@ function deploy($conn, $repo){
 			}
 			
 			if($node){
-				echo "Restarting $appName";
+				echo "Restarting $appName\r\n";
 				$output = shell_exec("cd $dir && forever restart $appName");
 				if(strpos($output, "error")!==false){
-					echo "$appName restarted successfully";
+					echo "$appName restarted successfully\r\n";
 					$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
 					$conn->query($sql);
 				}else{
@@ -85,11 +85,11 @@ function deploy($conn, $repo){
 					echo "There was an error trying to restart $appName, trying just to start it";
 					$output = shell_exec("cd $dir && forever start $appName");
 					if(strpos($output, "error")!==false){
-						echo "$appName started successfully";
+						echo "$appName started successfully\r\n";
 						$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
 						$conn->query($sql);
 					}else{
-						echo "There was an error using forever to start the app.";
+						echo "There was an error using forever to start the app.\r\n";
 						$sql = "UPDATE deployments SET status = 'Deployment Failed. There was an error restarting the node application' WHERE repo = '$repo'";
 						$conn->query($sql);
 					}
