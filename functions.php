@@ -15,6 +15,14 @@ function get_server_memory_usage(){
     return $memory_usage;
 }
 
+function get_server_swap_usage(){
+	$free = shell_exec('free');
+    $free = (string)trim($free);
+    $free_arr = explode("\n", $free);	
+	$swap = explode(" ", $free_arr[1]);
+	$usage = round($swap[2]/$swap[1]*100);
+}
+
 
 function get_server_cpu_usage(){
 

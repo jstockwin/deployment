@@ -63,8 +63,8 @@
 		echo "<h3>Server Status:</h3>";
 	
 		echo "<table>
-		<tr style='font-weight: bold'><th>CPU</th><th>RAM</th><th>Disk</th></tr>
-		<tr><td>".get_server_cpu_usage()."%</td><td>".get_server_memory_usage()."%</td><td>".get_server_disk_usage()."%</td></tr>
+		<tr style='font-weight: bold'><th>CPU</th><th>RAM</th><th>Swap</th><th>Disk</th></tr>
+		<tr><td>".get_server_cpu_usage()."%</td><td>".get_server_memory_usage()."%</td><td>".get_server_swap_usage()."%</td><td>".get_server_disk_usage()."%</td></tr>
 		</table>";
 	
 		echo "<h3>Deployment Status:</h3>";
