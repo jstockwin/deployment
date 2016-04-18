@@ -19,7 +19,7 @@ function get_server_swap_usage(){
 	$free = shell_exec('free');
     $free = (string)trim($free);
     $free_arr = explode("\n", $free);	
-	$swap = explode(" ", $free_arr[1]);
+	$swap = explode(" ", $free_arr[3]);
 	$usage = round($swap[2]/$swap[1]*100);
 }
 
