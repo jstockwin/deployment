@@ -31,7 +31,6 @@ function get_server_disk_usage(){
 
 function deploy($conn, $repo){
         $managing = TRUE;
-		$node = FALSE;
         switch($repo) {
                 case "Film-Night":
                         $dir = "/var/www/films.jakestockwin.co.uk/public_html";
@@ -41,8 +40,6 @@ function deploy($conn, $repo){
                         break;
 				case "book-sales":
 						$dir = "/home/jake/book-sales";
-						$node = TRUE;
-						$appName = "keystone.js";
 						break;
                 default:
                         $managing = FALSE;
@@ -55,16 +52,12 @@ function deploy($conn, $repo){
 			echo "Executing a git pull in directory $dir\r\n";
 			echo $output;
 			if(strpos($output, "Fast-forward")!==false){
-				if(!$node){
-					$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
-					$conn->query($sql);
-				}
+				$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
+				$conn->query($sql);
 				echo "Success: Fast forward performed";
 			}else if(strpos($output, "Already up-to-date")!==false){
-				if(!$node){
-					$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
-					$conn->query($sql);
-				}
+				$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
+				$conn->query($sql);
 				echo "The repository was already up to date\r\n";
 			}else{
 				$sql = "UPDATE deployments SET status = 'Deployment Failed. Check github webpush logs for details' WHERE repo = '$repo'";
@@ -72,30 +65,7 @@ function deploy($conn, $repo){
 				die("Error: Git pull failed");
 				var_dump(http_response_code(500));
 			}
-			
-			if($node){
-				echo "Restarting $appName\r\n";
-				$output = shell_exec("cd $dir && forever restart $appName");
-				if(strpos($output, "error")!==false){
-					echo "$appName restarted successfully\r\n";
-					$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
-					$conn->query($sql);
-				}else{
-					// Perhaps the server is not started for some reason?
-					echo "There was an error trying to restart $appName, trying just to start it\r\n";
-					$output = shell_exec("cd $dir && forever start $appName");
-					if(strpos($output, "error")!==false){
-						echo "$appName started successfully\r\n";
-						$sql = "UPDATE deployments SET status = 'Deployed Successfully' WHERE repo = '$repo'";
-						$conn->query($sql);
-					}else{
-						echo "There was an error using forever to start the app.\r\n";
-						$sql = "UPDATE deployments SET status = 'Deployment Failed. There was an error restarting the node application' WHERE repo = '$repo'";
-						$conn->query($sql);
-					}
-				}
-			}
-			
+					
         }else{
             echo "$repo is not hosted by this server";
             $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
