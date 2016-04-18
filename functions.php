@@ -23,6 +23,7 @@ function get_server_swap_usage(){
 	$swap = array_filter($swap);
 	$swap = array_merge($swap);
 	$usage = round($swap[2]/$swap[1]*100);
+	return $usage;
 }
 
 
