@@ -39,7 +39,7 @@ function deploy($conn, $repo){
                         $dir = "/var/www/deployment.jakestockwin.co.uk/public_html";
                         break;
 				case "book-sales":
-						$dir = "/home/jake/book-sales";
+						$dir = "/var/www/book-sales";
 						break;
                 default:
                         $managing = FALSE;
