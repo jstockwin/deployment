@@ -11,7 +11,7 @@ function get_server_memory_usage(){
     $cache = array_filter($cache);
     $mem = array_merge($mem);
     $cache = array_merge($cache);
-    $memory_usage = round($mem[2]/($mem[1]+$cache[3])*100);
+    $memory_usage = round($cache[2]/($mem[1])*100);
     return $memory_usage;
 }
 
