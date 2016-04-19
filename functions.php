@@ -52,6 +52,9 @@ function deploy($conn, $repo){
 				case "book-sales":
 						$dir = "/var/www/book-sales";
 						break;
+				case "KeystoneJS-Website":
+						$dir = "/var/www/students4students";
+						break;
                 default:
                         $managing = FALSE;
         }
