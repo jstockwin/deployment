@@ -62,7 +62,7 @@ function deploy($conn, $repo){
         if($managing){
 			$sql = "UPDATE deployments SET status = 'Deployed using git pull' WHERE repo = '$repo'";
 			$conn->query($sql);
-			$output = shell_exec("cd $dir && git reset --hard HEAD && git pull");
+			$output = shell_exec("cd $dir && git add . && git reset --hard HEAD && git pull");
 			echo "Executing a git pull in directory $dir\r\n";
 			echo $output;
 			if(strpos($output, "Fast-forward")!==false){
