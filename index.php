@@ -31,8 +31,7 @@
 		}
 		
         echo "Payload received, secret accepted\r\n";
-		$payload = str_replace("\n", "¬¬", $_POST['payload']);
-		$payload = json_decode(stripslashes($payload));
+		$payload = json_decode($_POST['payload']);
 		$ref = $payload->{'ref'};
 		if(strpos($ref, "refs/heads/master")===false){
 			die("Push was not to master branch. Ignoring change");
