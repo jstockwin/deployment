@@ -38,7 +38,7 @@
 		}
 		
         $repo = $payload->{'repository'}->{'name'};
-        $commit = strtok($payload->{'head_commit'}->{'message'}, "¬¬");
+        $commit = strtok($payload->{'head_commit'}->{'message'}, "\n");
         $time = $payload->{'head_commit'}->{'timestamp'};
 		$time = new DateTime($time);
 		$time = $time->format('Y-m-d H:i:s');
