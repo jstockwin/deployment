@@ -38,12 +38,13 @@
 		}
 		
         $repo = $payload->{'repository'}->{'name'};
+		$repoName = $payload->{'repository'}->{'full_name'};
         $commit = strtok($payload->{'head_commit'}->{'message'}, "\n");
         $time = $payload->{'head_commit'}->{'timestamp'};
 		$time = new DateTime($time);
 		$time = $time->format('Y-m-d H:i:s');
         $committer = $payload->{'head_commit'}->{'committer'}->{'username'};
-        $sql = "REPLACE INTO deployments VALUES ('$repo', '$commit', '$time', '$committer', 'awaiting deployment')";
+        $sql = "REPLACE INTO deployments VALUES ('$repoName', '$commit', '$time', '$committer', 'awaiting deployment')";
         $result = $conn->query($sql);
         if($result){
 			echo "Successfully updated SQL table for $repo\r\n";
