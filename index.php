@@ -33,14 +33,13 @@
         echo "Payload received, secret accepted\r\n";
 		$payload = str_replace("\n", "¬¬", $_POST['payload']);
 		$payload = json_decode(stripslashes($payload));
-		$payload = str_replace("¬¬", "\n", $payload);
 		$ref = $payload->{'ref'};
 		if(strpos($ref, "refs/heads/master")===false){
 			die("Push was not to master branch. Ignoring change");
 		}
 		
         $repo = $payload->{'repository'}->{'name'};
-        $commit = strtok($payload->{'head_commit'}->{'message'}, "\n");
+        $commit = strtok($payload->{'head_commit'}->{'message'}, "¬¬");
         $time = $payload->{'head_commit'}->{'timestamp'};
 		$time = new DateTime($time);
 		$time = $time->format('Y-m-d H:i:s');
