@@ -40,19 +40,19 @@ function get_server_disk_usage(){
         return round((1-$free/$total)*100);
 }
 
-function deploy($conn, $repo){
+function deploy($conn, $repo, $repoName){
         $managing = TRUE;
         switch($repo) {
-                case "Film-Night":
+                case "jstockwin/Film-Night":
                         $dir = "/var/www/films.jakestockwin.co.uk/public_html";
                         break;
-                case "deployment":
+                case "jstockwin/deployment":
                         $dir = "/var/www/deployment.jakestockwin.co.uk/public_html";
                         break;
-				case "book-sales":
+				case "jstockwin/book-sales":
 						$dir = "/var/www/book-sales";
 						break;
-				case "KeystoneJS-Website":
+				case "Students4Students/KeystoneJS-Website":
 						$dir = "/var/www/students4students";
 						break;
                 default:
