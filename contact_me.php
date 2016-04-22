@@ -1,5 +1,16 @@
 <?php
-header('Access-Control-Allow-Origin: http://jakestockwin.co.uk');
+$request_headers        = apache_request_headers();
+$http_origin            = $request_headers['Origin'];
+$allowed_http_origins   = array(
+                            "http://jakestockwin.co.uk"   ,
+                            "http://s4s.jakestockwin.co.uk"  ,
+                            "http://students4students.org.uk"  ,
+                          );
+if (in_array($http_origin, $allowed_http_origins)){  
+    header("Access-Control-Allow-Origin: " . $http_origin);
+}else{
+	die("Request did not originate from a valid domain");
+}
 // Check for empty fields
 if(empty($_POST['name'])  		||
    empty($_POST['to'])			||
