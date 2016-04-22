@@ -40,7 +40,7 @@ function get_server_disk_usage(){
         return round((1-$free/$total)*100);
 }
 
-function deploy($conn, $repo, $repoName){
+function deploy($conn, $repo){
         $managing = TRUE;
         switch($repo) {
                 case "jstockwin/Film-Night":
