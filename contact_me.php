@@ -3,8 +3,8 @@ $request_headers        = apache_request_headers();
 $http_origin            = $request_headers['Origin'];
 $allowed_http_origins   = array(
                             "http://jakestockwin.co.uk"   ,
-                            "http://s4s.jakestockwin.co.uk"  ,
-                            "http://students4students.org.uk"  ,
+                            "https://s4s.jakestockwin.co.uk"  ,
+                            "https://students4students.org.uk"  ,
                           );
 if (in_array($http_origin, $allowed_http_origins)){  
     header("Access-Control-Allow-Origin: " . $http_origin);
