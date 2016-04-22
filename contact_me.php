@@ -2,6 +2,7 @@
 header('Access-Control-Allow-Origin: http://jakestockwin.co.uk');
 // Check for empty fields
 if(empty($_POST['name'])  		||
+   empty($_POST['to'])			||
    empty($_POST['email']) 		||
    empty($_POST['phone']) 		||
    empty($_POST['message'])	||
@@ -13,7 +14,8 @@ if(empty($_POST['name'])  		||
 
 $name = $_POST['name'];
 $email_address = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-if ($email === FALSE) {
+$to = filter_var($_POST['to'], FILTER_VALIDATE_EMAIL);
+if ($email_address === FALSE || $to === FALSE) {
     echo 'Invalid email';
     exit(1);
 }
@@ -22,7 +24,6 @@ $message = $_POST['message'];
 
 
 // Create the email and send the message
-$to = 'jake.stockwin@lmh.ox.ac.uk'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
 $email_subject = "Website Contact Form:  $name";
 $email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
 $headers = "From: jstockwin@gmail.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
