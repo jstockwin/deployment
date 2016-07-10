@@ -18,7 +18,7 @@ function get_server_memory_usage(){
 function get_server_swap_usage(){
 	$free = shell_exec('free');
     $free = (string)trim($free);
-    $free_arr = explode("\n", $free);	
+    $free_arr = explode("\n", $free);
 	$swap = explode(" ", $free_arr[3]);
 	$swap = array_filter($swap);
 	$swap = array_merge($swap);
@@ -52,7 +52,7 @@ function deploy($conn, $repo){
 				case "jstockwin/book-sales":
 						$dir = "/var/www/book-sales";
 						break;
-				case "Students4Students/KeystoneJS-Website":
+				case "jakestockwin-co-uk/KeystoneJS-Website":
 						$dir = "/var/www/students4students";
 						break;
                 default:
@@ -79,7 +79,7 @@ function deploy($conn, $repo){
 				die("Error: Git pull failed");
 				var_dump(http_response_code(500));
 			}
-					
+
         }else{
             echo "$repo is not hosted by this server";
             $sql = "UPDATE deployments SET status = 'Deployment not handled by this server' WHERE repo = '$repo'";
