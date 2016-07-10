@@ -52,7 +52,7 @@ function deploy($conn, $repo){
 				case "jstockwin/book-sales":
 						$dir = "/var/www/book-sales";
 						break;
-				case "jakestockwin-co-uk/KeystoneJS-Website":
+				case "jakestockwin-co-uk/students4students":
 						$dir = "/var/www/students4students";
 						break;
                 default:
